@@ -110,7 +110,7 @@ def train(crnn, train_loader, criterion, iteration):
 def main(crnn, train_loader, val_loader, criterion, optimizer):
 
     crnn = crnn.to(device)
-    certerion = criterion.to(device)
+    criterion = criterion.to(device)
     Iteration = 0
     while Iteration < params.niter:
         train(crnn, train_loader, criterion, Iteration)
