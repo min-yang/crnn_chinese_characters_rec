@@ -68,7 +68,7 @@ if __name__ == '__main__':
     ## read an image
     image = cv2.imread(opt.images_path)
 
-    crnn_recognition(image, model)
+    crnn_recognition(image, model) 
     finished = time.time()
     print('elapsed time: {0}'.format(finished-started))
     
