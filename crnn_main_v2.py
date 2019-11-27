@@ -112,16 +112,18 @@ def main(crnn, train_loader, val_loader, criterion, optimizer):
     crnn = crnn.to(device)
     criterion = criterion.to(device)
     Iteration = 0
+    best_accuracy = params.best_accuracy
     while Iteration < params.niter:
         train(crnn, train_loader, criterion, Iteration)
         ## max_i: cut down the consuming time of testing, if you'd like to validate on the whole testset, please set it to len(val_loader)
         accuracy = val(crnn, val_loader, criterion, Iteration, max_i=1000)
         for p in crnn.parameters():
             p.requires_grad = True
-        if accuracy > params.best_accuracy:
+        if accuracy > best_accuracy:
+            best_accuracy = accuracy
             torch.save(crnn.state_dict(), '{0}/crnn_Rec_done_{1}_{2}.pth'.format(params.experiment, Iteration, accuracy))
             torch.save(crnn.state_dict(), '{0}/crnn_best.pth'.format(params.experiment))
-        print("is best accuracy: {0}".format(accuracy > params.best_accuracy))
+        print("is best accuracy: {0}".format(accuracy > best_accuracy))
         Iteration+=1
 
 def backward_hook(self, grad_input, grad_output):
